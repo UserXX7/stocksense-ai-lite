@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 import Dashboard from "./pages/Dashboard";
 import Search from "./pages/Search";
@@ -19,7 +20,13 @@ function App() {
       <Route path="/" element={<Login />} />
       <Route path="/register" element={<Register />} />
 
-      <Route element={<Layout />}>
+      <Route
+        element={
+          <ProtectedRoute>
+            <Layout />
+          </ProtectedRoute>
+        }
+      >
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/search" element={<Search />} />
         <Route path="/stock/:symbol" element={<StockDetails />} />
