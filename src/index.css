@@ -96,6 +96,9 @@ button {
   border-radius: 10px;
   font-weight: bold;
   margin-top: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
 }
 
 .auth-link {
@@ -106,6 +109,16 @@ button {
 
 .auth-link a {
   color: var(--green);
+}
+
+.error-message {
+  background: rgba(255, 77, 94, 0.12);
+  color: #ff7b88;
+  border: 1px solid rgba(255, 77, 94, 0.35);
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  font-size: 14px;
 }
 
 /* App Layout */
@@ -192,6 +205,14 @@ button {
 .logout-link:hover {
   background: rgba(255, 77, 94, 0.1);
   color: var(--red);
+}
+
+.logout-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
 }
 
 .main-content {

@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
   Search,
@@ -13,6 +13,13 @@ import {
 } from "lucide-react";
 
 function Sidebar() {
+  const navigate = useNavigate();
+
+  function handleLogout() {
+    localStorage.setItem("isLoggedIn", "false");
+    navigate("/");
+  }
+
   const links = [
     { path: "/dashboard", label: "Dashboard", icon: <LayoutDashboard /> },
     { path: "/search", label: "Search", icon: <Search /> },
@@ -45,10 +52,10 @@ function Sidebar() {
         ))}
       </nav>
 
-      <NavLink to="/" className="logout-link">
+      <button className="logout-link logout-button" onClick={handleLogout}>
         <LogOut size={18} />
         <span>Log out</span>
-      </NavLink>
+      </button>
     </aside>
   );
 }
