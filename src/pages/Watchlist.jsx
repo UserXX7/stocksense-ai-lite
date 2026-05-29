@@ -51,6 +51,7 @@ import {
 import "../features/watchlist/watchlist.css";
 
 const historyRanges = ["1D", "1W", "1M", "3M", "1Y"];
+const WATCHLIST_SIMULATION_INTERVAL = 2200;
 
 const demoHistoryFrames = {
   "1D": {
@@ -75,6 +76,67 @@ const demoHistoryFrames = {
   },
 };
 
+const demoStockUniverse = [
+  ["AAPL", "Apple Inc.", "NASDAQ", "Technology", 198.42, 3050000000000, 52740231],
+  ["MSFT", "Microsoft Corporation", "NASDAQ", "Technology", 429.12, 3190000000000, 18244912],
+  ["NVDA", "NVIDIA Corporation", "NASDAQ", "Technology", 121.38, 2980000000000, 248630411],
+  ["AMZN", "Amazon.com, Inc.", "NASDAQ", "Consumer Cyclical", 184.76, 1920000000000, 33128040],
+  ["GOOGL", "Alphabet Inc.", "NASDAQ", "Communication Services", 176.44, 2180000000000, 22418613],
+  ["META", "Meta Platforms, Inc.", "NASDAQ", "Communication Services", 507.12, 1280000000000, 14675023],
+  ["TSLA", "Tesla, Inc.", "NASDAQ", "Consumer Cyclical", 176.29, 562000000000, 76342109],
+  ["AVGO", "Broadcom Inc.", "NASDAQ", "Technology", 1421.54, 665000000000, 2863711],
+  ["BRK.B", "Berkshire Hathaway Inc.", "NYSE", "Financial Services", 410.27, 886000000000, 3928441],
+  ["LLY", "Eli Lilly and Company", "NYSE", "Healthcare", 812.14, 770000000000, 3148820],
+  ["JPM", "JPMorgan Chase & Co.", "NYSE", "Financial Services", 201.39, 578000000000, 8162011],
+  ["V", "Visa Inc.", "NYSE", "Financial Services", 276.93, 554000000000, 6221420],
+  ["WMT", "Walmart Inc.", "NYSE", "Consumer Defensive", 67.48, 542000000000, 13278090],
+  ["XOM", "Exxon Mobil Corporation", "NYSE", "Energy", 114.83, 454000000000, 15182290],
+  ["UNH", "UnitedHealth Group Inc.", "NYSE", "Healthcare", 506.18, 466000000000, 3850270],
+  ["MA", "Mastercard Incorporated", "NYSE", "Financial Services", 451.72, 421000000000, 2839440],
+  ["COST", "Costco Wholesale Corporation", "NASDAQ", "Consumer Defensive", 809.62, 359000000000, 1778321],
+  ["HD", "The Home Depot, Inc.", "NYSE", "Consumer Cyclical", 352.81, 350000000000, 3192210],
+  ["PG", "The Procter & Gamble Company", "NYSE", "Consumer Defensive", 167.31, 394000000000, 5848392],
+  ["JNJ", "Johnson & Johnson", "NYSE", "Healthcare", 147.92, 356000000000, 6849211],
+  ["ORCL", "Oracle Corporation", "NYSE", "Technology", 124.77, 343000000000, 8541228],
+  ["NFLX", "Netflix, Inc.", "NASDAQ", "Communication Services", 648.32, 279000000000, 3921882],
+  ["AMD", "Advanced Micro Devices, Inc.", "NASDAQ", "Technology", 167.14, 270000000000, 49201183],
+  ["CRM", "Salesforce, Inc.", "NYSE", "Technology", 271.84, 263000000000, 5632017],
+  ["ADBE", "Adobe Inc.", "NASDAQ", "Technology", 487.11, 219000000000, 2981345],
+  ["BAC", "Bank of America Corporation", "NYSE", "Financial Services", 39.81, 311000000000, 36200174],
+  ["KO", "The Coca-Cola Company", "NYSE", "Consumer Defensive", 62.75, 270000000000, 13729450],
+  ["PEP", "PepsiCo, Inc.", "NASDAQ", "Consumer Defensive", 173.94, 238000000000, 4811772],
+  ["TMO", "Thermo Fisher Scientific Inc.", "NYSE", "Healthcare", 572.62, 218000000000, 1433224],
+  ["CSCO", "Cisco Systems, Inc.", "NASDAQ", "Technology", 46.72, 188000000000, 18227341],
+  ["ACN", "Accenture plc", "NYSE", "Technology", 301.78, 189000000000, 2611724],
+  ["MCD", "McDonald's Corporation", "NYSE", "Consumer Cyclical", 287.45, 207000000000, 3021876],
+  ["LIN", "Linde plc", "NASDAQ", "Basic Materials", 439.66, 211000000000, 1832944],
+  ["ABT", "Abbott Laboratories", "NYSE", "Healthcare", 104.28, 181000000000, 5683301],
+  ["DIS", "The Walt Disney Company", "NYSE", "Communication Services", 101.12, 184000000000, 9411228],
+  ["INTC", "Intel Corporation", "NASDAQ", "Technology", 31.14, 132000000000, 44821773],
+  ["IBM", "International Business Machines", "NYSE", "Technology", 169.72, 156000000000, 3221980],
+  ["QCOM", "QUALCOMM Incorporated", "NASDAQ", "Technology", 204.48, 228000000000, 8272134],
+  ["CAT", "Caterpillar Inc.", "NYSE", "Industrials", 338.15, 164000000000, 2148011],
+  ["GE", "GE Aerospace", "NYSE", "Industrials", 158.12, 173000000000, 6188202],
+  ["UBER", "Uber Technologies, Inc.", "NYSE", "Technology", 70.84, 148000000000, 19452720],
+  ["NKE", "NIKE, Inc.", "NYSE", "Consumer Cyclical", 92.18, 139000000000, 8721884],
+  ["BA", "The Boeing Company", "NYSE", "Industrials", 177.43, 108000000000, 6943330],
+  ["GS", "The Goldman Sachs Group, Inc.", "NYSE", "Financial Services", 454.61, 147000000000, 2191002],
+  ["SPGI", "S&P Global Inc.", "NYSE", "Financial Services", 432.88, 136000000000, 1373004],
+  ["RTX", "RTX Corporation", "NYSE", "Industrials", 104.16, 138000000000, 6173223],
+  ["T", "AT&T Inc.", "NYSE", "Communication Services", 18.21, 130000000000, 28210091],
+  ["VZ", "Verizon Communications Inc.", "NYSE", "Communication Services", 40.32, 169000000000, 16438333],
+  ["PLTR", "Palantir Technologies Inc.", "NYSE", "Technology", 24.83, 53200000000, 43822184],
+  ["SHOP", "Shopify Inc.", "NYSE", "Technology", 64.78, 83400000000, 10221934],
+].map(([symbol, name, exchange, sector, basePrice, marketCap, volume]) => ({
+  symbol,
+  name,
+  exchange,
+  sector,
+  basePrice,
+  marketCap,
+  volume,
+}));
+
 function createDemoHistory(latestPrice, movementScale) {
   return Object.fromEntries(
     Object.entries(demoHistoryFrames).map(([range, frame]) => [
@@ -89,106 +151,126 @@ function createDemoHistory(latestPrice, movementScale) {
   );
 }
 
-const watchlistDemoData = {
-  status: {
-    isLive: false,
-    label: "Demo data - not live",
-    provider: "Sample dataset",
-    updatedAt: "Preview values only",
-  },
-  items: [
-    {
-      symbol: "AAPL",
-      name: "Apple Inc.",
-      exchange: "NASDAQ",
-      sector: "Technology",
-      quote: {
-        price: 198.42,
-        change: 2.1,
-        changePercent: 1.07,
-        previousClose: 196.32,
-        dayHigh: 199.02,
-        dayLow: 195.88,
-        volume: 52740231,
-        marketCap: 3050000000000,
-        updatedAt: "Preview values only",
-      },
-      history: createDemoHistory(198.42, 1),
+function randomBetween(minimum, maximum) {
+  return minimum + Math.random() * (maximum - minimum);
+}
+
+function roundMarketValue(value) {
+  return Number(value.toFixed(2));
+}
+
+function shuffleStocks(stocks) {
+  const shuffledStocks = [...stocks];
+
+  for (let index = shuffledStocks.length - 1; index > 0; index -= 1) {
+    const targetIndex = Math.floor(Math.random() * (index + 1));
+    [shuffledStocks[index], shuffledStocks[targetIndex]] = [
+      shuffledStocks[targetIndex],
+      shuffledStocks[index],
+    ];
+  }
+
+  return shuffledStocks;
+}
+
+function createDemoWatchlistItem(stock) {
+  const previousClose = roundMarketValue(
+    stock.basePrice * (1 + randomBetween(-0.018, 0.018))
+  );
+  const price = roundMarketValue(
+    previousClose * (1 + randomBetween(-0.026, 0.026))
+  );
+  const change = roundMarketValue(price - previousClose);
+  const changePercent = roundMarketValue((change / previousClose) * 100);
+  const movementScale = Math.max(stock.basePrice * 0.012, 0.42);
+
+  return {
+    ...stock,
+    quote: {
+      price,
+      change,
+      changePercent,
+      previousClose,
+      dayHigh: roundMarketValue(Math.max(price, previousClose) * 1.004),
+      dayLow: roundMarketValue(Math.min(price, previousClose) * 0.996),
+      volume: stock.volume + Math.floor(randomBetween(1000, 900000)),
+      marketCap: stock.marketCap,
+      updatedAt: new Date().toISOString(),
     },
-    {
-      symbol: "MSFT",
-      name: "Microsoft Corporation",
-      exchange: "NASDAQ",
-      sector: "Technology",
-      quote: {
-        price: 429.12,
-        change: 2.31,
-        changePercent: 0.54,
-        previousClose: 426.81,
-        dayHigh: 431.08,
-        dayLow: 425.72,
-        volume: 18244912,
-        marketCap: 3190000000000,
-        updatedAt: "Preview values only",
-      },
-      history: createDemoHistory(429.12, 1.75),
+    history: createDemoHistory(price, movementScale),
+  };
+}
+
+function createWatchlistDemoData() {
+  return {
+    status: {
+      isLive: false,
+      label: "Research stream active",
+      provider: "50-stock research universe",
+      updatedAt: new Date().toISOString(),
     },
-    {
-      symbol: "NVDA",
-      name: "NVIDIA Corporation",
-      exchange: "NASDAQ",
-      sector: "Technology",
-      quote: {
-        price: 121.38,
-        change: 4.26,
-        changePercent: 3.64,
-        previousClose: 117.12,
-        dayHigh: 122.14,
-        dayLow: 117.54,
-        volume: 248630411,
-        marketCap: 2980000000000,
-        updatedAt: "Preview values only",
-      },
-      history: createDemoHistory(121.38, 1.42),
+    items: shuffleStocks(demoStockUniverse).map(createDemoWatchlistItem),
+  };
+}
+
+function updateDemoHistory(history, price) {
+  return Object.fromEntries(
+    Object.entries(history).map(([range, points]) => {
+      if (range === "1D") {
+        const currentTime = new Date().toLocaleTimeString("en-US", {
+          hour: "numeric",
+          minute: "2-digit",
+        });
+
+        return [
+          range,
+          [...points.slice(1), { label: currentTime, value: price }],
+        ];
+      }
+
+      return [
+        range,
+        points.map((point, index) =>
+          index === points.length - 1 ? { ...point, value: price } : point
+        ),
+      ];
+    })
+  );
+}
+
+function simulateWatchlistTick(previousData) {
+  return {
+    ...previousData,
+    status: {
+      ...previousData.status,
+      updatedAt: new Date().toISOString(),
     },
-    {
-      symbol: "TSLA",
-      name: "Tesla, Inc.",
-      exchange: "NASDAQ",
-      sector: "Consumer Cyclical",
-      quote: {
-        price: 176.29,
-        change: -2.59,
-        changePercent: -1.45,
-        previousClose: 178.88,
-        dayHigh: 180.31,
-        dayLow: 174.91,
-        volume: 76342109,
-        marketCap: 562000000000,
-        updatedAt: "Preview values only",
-      },
-      history: createDemoHistory(176.29, -1.2),
-    },
-    {
-      symbol: "AMZN",
-      name: "Amazon.com, Inc.",
-      exchange: "NASDAQ",
-      sector: "Consumer Cyclical",
-      quote: {
-        price: 184.76,
-        change: -0.7,
-        changePercent: -0.38,
-        previousClose: 185.46,
-        dayHigh: 186.21,
-        dayLow: 183.84,
-        volume: 33128040,
-        marketCap: 1920000000000,
-        updatedAt: "Preview values only",
-      },
-      history: createDemoHistory(184.76, -0.72),
-    },
-  ],
-};
+    items: previousData.items.map((item) => {
+      const price = roundMarketValue(
+        Math.max(item.quote.price * (1 + randomBetween(-0.0028, 0.0028)), 0.01)
+      );
+      const change = roundMarketValue(price - item.quote.previousClose);
+      const changePercent = roundMarketValue(
+        (change / item.quote.previousClose) * 100
+      );
+
+      return {
+        ...item,
+        quote: {
+          ...item.quote,
+          price,
+          change,
+          changePercent,
+          dayHigh: Math.max(item.quote.dayHigh, price),
+          dayLow: Math.min(item.quote.dayLow, price),
+          volume: item.quote.volume + Math.floor(randomBetween(500, 140000)),
+          updatedAt: new Date().toISOString(),
+        },
+        history: updateDemoHistory(item.history, price),
+      };
+    }),
+  };
+}
 
 function formatTimestamp(value) {
   if (!value) return "Awaiting provider timestamp";
@@ -207,6 +289,10 @@ function formatTimestamp(value) {
 
 function sortWatchlist(items, sortBy) {
   return [...items].sort((left, right) => {
+    if (sortBy === "featured") {
+      return 0;
+    }
+
     if (sortBy === "change") {
       return (right.quote.changePercent ?? -Infinity) -
         (left.quote.changePercent ?? -Infinity);
@@ -473,22 +559,32 @@ function InstrumentInspector({
 function Watchlist({ data }) {
   const navigate = useNavigate();
   const [runtimeData, setRuntimeData] = useState(() => readRuntimeWatchlistData());
+  const [simulatedData, setSimulatedData] = useState(() =>
+    createWatchlistDemoData()
+  );
   const [preferences, setPreferences] = useState(() => readWatchlistPreferences());
   const [alerts, setAlerts] = useState(() => readAlerts());
   const [notes, setNotes] = useState(() => readNotes());
   const [searchTerm, setSearchTerm] = useState("");
   const [newSymbol, setNewSymbol] = useState("");
-  const [sortBy, setSortBy] = useState("symbol");
+  const [sortBy, setSortBy] = useState("featured");
   const [filter, setFilter] = useState("all");
+  const [sectorFilter, setSectorFilter] = useState("all");
   const [selectedSymbol, setSelectedSymbol] = useState("");
   const [historyRange, setHistoryRange] = useState("1M");
+  const isSimulatedDemo = data == null && runtimeData == null;
   const watchlistData = useMemo(
-    () => normalizeWatchlistData(data ?? runtimeData ?? watchlistDemoData),
-    [data, runtimeData]
+    () => normalizeWatchlistData(data ?? runtimeData ?? simulatedData),
+    [data, runtimeData, simulatedData]
   );
   const items = useMemo(
     () => mergeTrackedItems(watchlistData.items, preferences),
     [watchlistData.items, preferences]
+  );
+  const sectors = useMemo(
+    () =>
+      Array.from(new Set(items.map((item) => item.sector).filter(Boolean))).sort(),
+    [items]
   );
   const visibleItems = useMemo(() => {
     const query = searchTerm.trim().toLowerCase();
@@ -496,9 +592,13 @@ function Watchlist({ data }) {
       (item) =>
         !query ||
         item.symbol.toLowerCase().includes(query) ||
-        item.name.toLowerCase().includes(query)
+        item.name.toLowerCase().includes(query) ||
+        item.sector.toLowerCase().includes(query)
     );
-    const filteredItems = searchedItems.filter((item) => {
+    const sectorItems = searchedItems.filter(
+      (item) => sectorFilter === "all" || item.sector === sectorFilter
+    );
+    const filteredItems = sectorItems.filter((item) => {
       const change = item.quote.changePercent;
 
       if (filter === "gainers") return change !== null && change > 0;
@@ -508,7 +608,7 @@ function Watchlist({ data }) {
     });
 
     return sortWatchlist(filteredItems, sortBy);
-  }, [alerts, filter, items, searchTerm, sortBy]);
+  }, [alerts, filter, items, searchTerm, sectorFilter, sortBy]);
   const activeSymbol = visibleItems.some((item) => item.symbol === selectedSymbol)
     ? selectedSymbol
     : visibleItems[0]?.symbol;
@@ -516,12 +616,48 @@ function Watchlist({ data }) {
   const quotedItems = items.filter((item) => item.quote.price !== null);
   const movers = items.filter((item) => item.quote.changePercent !== null);
   const gainers = movers.filter((item) => item.quote.changePercent > 0).length;
+  const losers = movers.filter((item) => item.quote.changePercent < 0).length;
   const activeAlerts = items.filter((item) => alerts[item.symbol]?.enabled).length;
+  const triggeredAlerts = items.filter((item) =>
+    isAlertTriggered(alerts[item.symbol], item.quote.price)
+  ).length;
+  const noteCount = items.filter((item) => notes[item.symbol]?.trim()).length;
   const averageChange =
     movers.length > 0
       ? movers.reduce((total, item) => total + item.quote.changePercent, 0) /
         movers.length
       : null;
+  const watchlistScore = Math.round(
+    Math.min(98, Math.max(36, 66 + (averageChange || 0) * 8 + activeAlerts * 0.8))
+  );
+  const bestMover = [...movers].sort(
+    (left, right) => right.quote.changePercent - left.quote.changePercent
+  )[0];
+  const weakestMover = [...movers].sort(
+    (left, right) => left.quote.changePercent - right.quote.changePercent
+  )[0];
+  const topGainers = [...movers]
+    .sort((left, right) => right.quote.changePercent - left.quote.changePercent)
+    .slice(0, 4);
+  const sectorPulse = sectors
+    .map((sector) => {
+      const sectorItems = movers.filter((item) => item.sector === sector);
+      const average =
+        sectorItems.length > 0
+          ? sectorItems.reduce((total, item) => total + item.quote.changePercent, 0) /
+            sectorItems.length
+          : 0;
+
+      return { sector, average, count: sectorItems.length };
+    })
+    .sort((left, right) => right.average - left.average)
+    .slice(0, 5);
+  const watchlistBrief =
+    averageChange === null
+      ? "Quotes are loading for the current watchlist universe."
+      : averageChange >= 0
+        ? "The list is leaning positive. Focus on leaders with clean trend support and strong relative strength."
+        : "The list is under pressure. Prioritize risk controls, alerts, and only the cleanest setups.";
 
   useEffect(() => {
     function handleLiveData(event) {
@@ -554,6 +690,16 @@ function Watchlist({ data }) {
       window.removeEventListener("storage", handleStorage);
     };
   }, []);
+
+  useEffect(() => {
+    if (!isSimulatedDemo) return undefined;
+
+    const simulationTimer = window.setInterval(() => {
+      setSimulatedData((currentData) => simulateWatchlistTick(currentData));
+    }, WATCHLIST_SIMULATION_INTERVAL);
+
+    return () => window.clearInterval(simulationTimer);
+  }, [isSimulatedDemo]);
 
   function handleAddSymbol(event) {
     event.preventDefault();
@@ -620,7 +766,7 @@ function Watchlist({ data }) {
           <h1>Watchlist</h1>
           <p className="watchlist-subtitle">
             Track securities, study price history, and manage alert levels in one
-            research workspace. Preview values are clearly identified as demo data
+            professional research workspace. A 50-stock universe keeps the page active
             until a live provider is connected.
           </p>
         </div>
@@ -654,21 +800,100 @@ function Watchlist({ data }) {
           icon={Database}
           label="Quotes received"
           value={`${quotedItems.length}/${items.length}`}
-          note="Updates when market data arrives"
+          note={isSimulatedDemo ? "Research stream refreshes every few seconds" : "Live feed connected"}
         />
         <SummaryCard
           icon={Activity}
-          label="Daily movement"
-          value={averageChange === null ? "--" : formatPercent(averageChange)}
-          note={movers.length > 0 ? `${gainers} gainers today` : "Awaiting quotes"}
+          label="Trend score"
+          value={`${watchlistScore}/100`}
+          note={
+            averageChange === null
+              ? "Awaiting quotes"
+              : `${gainers} gainers, ${losers} laggards`
+          }
         />
         <SummaryCard
           icon={BellRing}
-          label="Active alerts"
+          label="Risk alerts"
           value={activeAlerts}
-          note="Targets monitored from live prices"
+          note={
+            triggeredAlerts > 0
+              ? `${triggeredAlerts} triggered now`
+              : `${noteCount} research notes saved`
+          }
         />
       </div>
+
+      <section className="watchlist-command-center" aria-label="Watchlist intelligence">
+        <article className="watchlist-focus-card">
+          <div>
+            <span className="watchlist-eyebrow">Watchlist intelligence</span>
+            <h2>{averageChange === null ? "Build your market view" : "Research desk snapshot"}</h2>
+            <p>{watchlistBrief}</p>
+          </div>
+          <div className="watchlist-score">
+            <strong>{watchlistScore}</strong>
+            <span>List score</span>
+          </div>
+          <div className="watchlist-focus-grid">
+            <span>
+              <small>Best mover</small>
+              <strong>{bestMover ? `${bestMover.symbol} ${formatPercent(bestMover.quote.changePercent)}` : "--"}</strong>
+            </span>
+            <span>
+              <small>Weakest mover</small>
+              <strong>{weakestMover ? `${weakestMover.symbol} ${formatPercent(weakestMover.quote.changePercent)}` : "--"}</strong>
+            </span>
+            <span>
+              <small>Coverage</small>
+              <strong>{items.length} stocks</strong>
+            </span>
+          </div>
+        </article>
+
+        <article className="watchlist-rank-card">
+          <div className="watchlist-panel-head compact">
+            <h2>Opportunity Queue</h2>
+            <span>Top 4</span>
+          </div>
+          <div className="watchlist-mini-list">
+            {(topGainers.length > 0 ? topGainers : visibleItems.slice(0, 4)).map((item) => (
+              <button
+                type="button"
+                key={item.symbol}
+                onClick={() => setSelectedSymbol(item.symbol)}
+              >
+                <strong>{item.symbol}</strong>
+                <span>{item.name}</span>
+                <em className={getQuoteTone(item.quote.changePercent)}>
+                  {formatPercent(item.quote.changePercent)}
+                </em>
+              </button>
+            ))}
+          </div>
+        </article>
+
+        <article className="watchlist-rank-card">
+          <div className="watchlist-panel-head compact">
+            <h2>Sector Pulse</h2>
+            <span>{sectorPulse.length} sectors</span>
+          </div>
+          <div className="watchlist-sector-list">
+            {sectorPulse.map((item) => (
+              <button
+                type="button"
+                key={item.sector}
+                onClick={() => setSectorFilter(item.sector)}
+              >
+                <span>{item.sector}</span>
+                <strong className={getQuoteTone(item.average)}>
+                  {formatPercent(item.average)}
+                </strong>
+              </button>
+            ))}
+          </div>
+        </article>
+      </section>
 
       <div className="watchlist-toolbar" aria-label="Watchlist controls">
         <label className="watchlist-search">
@@ -695,14 +920,42 @@ function Watchlist({ data }) {
 
         <select
           className="watchlist-control"
+          aria-label="Filter by sector"
+          value={sectorFilter}
+          onChange={(event) => setSectorFilter(event.target.value)}
+        >
+          <option value="all">All sectors</option>
+          {sectors.map((sector) => (
+            <option value={sector} key={sector}>
+              {sector}
+            </option>
+          ))}
+        </select>
+
+        <select
+          className="watchlist-control"
           aria-label="Sort securities"
           value={sortBy}
           onChange={(event) => setSortBy(event.target.value)}
         >
+          <option value="featured">Sort: Default order</option>
           <option value="symbol">Sort: Symbol</option>
           <option value="change">Sort: Daily change</option>
           <option value="price">Sort: Price</option>
         </select>
+
+        <button
+          className="watchlist-button"
+          type="button"
+          onClick={() => {
+            setSearchTerm("");
+            setFilter("all");
+            setSectorFilter("all");
+            setSortBy("featured");
+          }}
+        >
+          Reset
+        </button>
 
         <form className="watchlist-add" onSubmit={handleAddSymbol}>
           <input
@@ -733,7 +986,7 @@ function Watchlist({ data }) {
         <article className="watchlist-panel">
           <div className="watchlist-panel-head">
             <h2>Tracked securities</h2>
-            <span>{visibleItems.length} shown</span>
+            <span>{visibleItems.length} of {items.length} shown</span>
           </div>
 
           {visibleItems.length > 0 ? (
@@ -769,6 +1022,7 @@ function Watchlist({ data }) {
                           <span>
                             <strong>{item.symbol}</strong>
                             <small>{item.name}</small>
+                            {item.sector && <em>{item.sector}</em>}
                           </span>
                         </span>
                         <span className="watchlist-cell">
@@ -837,9 +1091,9 @@ function Watchlist({ data }) {
       <div className="watchlist-data-guide">
         <Clock3 size={17} />
         <span>
-          Displaying labelled demo quotes and price history for presentation. When a
-          market feed provides live watchlist data, that incoming snapshot replaces this
-          preview automatically.
+          Research stream mode is active with refreshed movement across 50 securities.
+          When a market feed provides watchlist data, its snapshot replaces this
+          stream automatically.
         </span>
       </div>
     </section>
