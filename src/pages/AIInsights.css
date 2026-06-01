@@ -1,0 +1,770 @@
+/* ─── AI Insights Page ───────────────────────────────────────────── */
+
+.ai-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ─── Disclaimer Banner ──────────────────────────────────────────── */
+
+.ai-disclaimer {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 13px 18px;
+  background: rgba(240, 180, 41, 0.07);
+  border: 1px solid rgba(240, 180, 41, 0.25);
+  border-radius: 12px;
+  font-size: 13px;
+  color: #c4a84f;
+  line-height: 1.55;
+}
+
+.ai-disclaimer svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: #f0b429;
+}
+
+.ai-disclaimer strong {
+  color: #f0b429;
+}
+
+/* ─── Header ─────────────────────────────────────────────────────── */
+
+.ai-header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ai-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ai-title-row h1 {
+  font-size: 26px;
+  font-weight: 800;
+  color: #f5f7fa;
+}
+
+.ai-title-row svg {
+  color: #22e6a8;
+}
+
+.ai-subtitle {
+  font-size: 14px;
+  color: #95a3b5;
+}
+
+/* ─── How To Guide ───────────────────────────────────────────────── */
+
+.how-to-guide {
+  background: rgba(27, 47, 66, 0.45);
+  border: 1px solid #1b2f42;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.how-to-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 13px 18px;
+  background: transparent;
+  border: none;
+  color: #95a3b5;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  transition: color 0.18s ease;
+}
+
+.how-to-toggle svg:first-child {
+  color: #22e6a8;
+  flex-shrink: 0;
+}
+
+.how-to-toggle:hover {
+  color: #f5f7fa;
+}
+
+.how-to-toggle svg:last-child {
+  margin-left: auto;
+}
+
+.how-to-steps {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0 18px 16px 18px;
+  border-top: 1px solid #1b2f42;
+  margin: 0;
+}
+
+.how-to-steps li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 13px;
+  color: #95a3b5;
+  line-height: 1.6;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(27, 47, 66, 0.6);
+}
+
+.how-to-steps li:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.step-num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(34, 230, 168, 0.12);
+  border: 1px solid rgba(34, 230, 168, 0.3);
+  color: #22e6a8;
+  font-size: 11px;
+  font-weight: 800;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.guide-green {
+  color: #22e6a8;
+}
+
+.guide-red {
+  color: #ff4d5e;
+}
+
+/* ─── Filter Pills ───────────────────────────────────────────────── */
+
+.ai-filters {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.af-pill {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  background: #0b1623;
+  border: 1px solid #1b2f42;
+  color: #95a3b5;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+}
+
+.af-pill:hover {
+  border-color: #2d4a60;
+  color: #f5f7fa;
+}
+
+.af-count {
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 10px;
+  padding: 1px 7px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* Active states per sentiment */
+.af-active.af-all,
+.af-active.af-positive {
+  background: rgba(34, 230, 168, 0.1);
+  border-color: rgba(34, 230, 168, 0.35);
+  color: #22e6a8;
+}
+
+.af-active.af-negative {
+  background: rgba(255, 77, 94, 0.1);
+  border-color: rgba(255, 77, 94, 0.35);
+  color: #ff4d5e;
+}
+
+.af-active.af-neutral {
+  background: rgba(240, 180, 41, 0.1);
+  border-color: rgba(240, 180, 41, 0.35);
+  color: #f0b429;
+}
+
+/* ─── Cards Grid ─────────────────────────────────────────────────── */
+
+.insights-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+/* ─── Insight Card ───────────────────────────────────────────────── */
+
+.insight-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 20px 20px 16px 24px;
+  border-radius: 16px;
+  border: 1px solid transparent;
+  border-left-width: 4px;
+  background: #0b1623;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.insight-card:hover {
+  transform: translateY(-2px);
+}
+
+/* Sentiment variants */
+.insight-card.s-positive {
+  border-color: rgba(34, 230, 168, 0.18);
+  border-left-color: #22e6a8;
+  background: rgba(34, 230, 168, 0.04);
+  box-shadow: 0 4px 20px rgba(34, 230, 168, 0.04);
+}
+
+.insight-card.s-positive:hover {
+  box-shadow: 0 10px 36px rgba(34, 230, 168, 0.09);
+}
+
+.insight-card.s-negative {
+  border-color: rgba(255, 77, 94, 0.18);
+  border-left-color: #ff4d5e;
+  background: rgba(255, 77, 94, 0.04);
+  box-shadow: 0 4px 20px rgba(255, 77, 94, 0.04);
+}
+
+.insight-card.s-negative:hover {
+  box-shadow: 0 10px 36px rgba(255, 77, 94, 0.09);
+}
+
+.insight-card.s-neutral {
+  border-color: rgba(240, 180, 41, 0.18);
+  border-left-color: #f0b429;
+  background: rgba(240, 180, 41, 0.04);
+  box-shadow: 0 4px 20px rgba(240, 180, 41, 0.04);
+}
+
+.insight-card.s-neutral:hover {
+  box-shadow: 0 10px 36px rgba(240, 180, 41, 0.09);
+}
+
+/* ─── Beginner Badge ─────────────────────────────────────────────── */
+
+.beginner-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(34, 230, 168, 0.1);
+  border: 1px solid rgba(34, 230, 168, 0.28);
+  color: #22e6a8;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 2px;
+  cursor: default;
+}
+
+/* ─── Status Dot ─────────────────────────────────────────────────── */
+
+.status-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-right: 4px;
+}
+
+/* ─── Card Top Row ───────────────────────────────────────────────── */
+
+.ic-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.ic-identity {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.ic-symbol {
+  font-size: 18px;
+  font-weight: 800;
+  color: #f5f7fa;
+  letter-spacing: 0.3px;
+}
+
+.ic-company {
+  font-size: 13px;
+  font-weight: 600;
+  color: #cbd5e1;
+}
+
+.ic-sector {
+  font-size: 11px;
+  color: #95a3b5;
+}
+
+.ic-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.ic-change {
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.c-up {
+  color: #22e6a8;
+}
+
+.c-down {
+  color: #ff4d5e;
+}
+
+.ic-sentiment {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  border: 1px solid;
+}
+
+/* ─── AI Prediction Box ──────────────────────────────────────────── */
+
+.ic-prediction {
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ic-pred-headline {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.ic-pred-growth {
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.ic-pred-horizon {
+  font-size: 13px;
+  color: #95a3b5;
+}
+
+.ic-pred-target {
+  font-size: 13px;
+  color: #95a3b5;
+}
+
+.ic-pred-target strong {
+  font-weight: 700;
+}
+
+.ic-pred-current {
+  font-size: 12px;
+  color: #3d5266;
+}
+
+/* ─── Buy / Sell Windows ─────────────────────────────────────────── */
+
+.ic-windows {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.ic-window {
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.buy-window {
+  background: rgba(34, 230, 168, 0.06);
+  border-color: rgba(34, 230, 168, 0.25);
+}
+
+.sell-window {
+  background: rgba(255, 77, 94, 0.06);
+  border-color: rgba(255, 77, 94, 0.25);
+}
+
+.window-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+}
+
+.buy-window .window-header {
+  color: #22e6a8;
+}
+
+.sell-window .window-header {
+  color: #ff4d5e;
+}
+
+.window-date {
+  font-size: 14px;
+  font-weight: 700;
+  color: #f5f7fa;
+}
+
+.window-note {
+  font-size: 11.5px;
+  color: #95a3b5;
+  line-height: 1.45;
+}
+
+/* ─── Tags ───────────────────────────────────────────────────────── */
+
+.ic-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.ic-tag {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  border: 1px solid;
+}
+
+.ic-tag.t-positive {
+  background: rgba(34, 230, 168, 0.1);
+  border-color: rgba(34, 230, 168, 0.25);
+  color: #22e6a8;
+}
+
+.ic-tag.t-negative {
+  background: rgba(255, 77, 94, 0.1);
+  border-color: rgba(255, 77, 94, 0.25);
+  color: #ff4d5e;
+}
+
+.ic-tag.t-neutral {
+  background: rgba(240, 180, 41, 0.1);
+  border-color: rgba(240, 180, 41, 0.25);
+  color: #f0b429;
+}
+
+/* ─── Section Label ──────────────────────────────────────────────── */
+
+.ic-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ic-section-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  color: #95a3b5;
+}
+
+/* ─── AI Summary ─────────────────────────────────────────────────── */
+
+.ic-summary {
+  font-size: 13.5px;
+  color: #b0bec8;
+  line-height: 1.65;
+}
+
+.ic-body-text {
+  font-size: 13px;
+  color: #b0bec8;
+  line-height: 1.65;
+}
+
+/* ─── Full Analysis Block ────────────────────────────────────────── */
+
+.ic-full-analysis {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 12px;
+}
+
+/* ─── Sentiment + Risk Row ───────────────────────────────────────── */
+
+.ic-sentiment-risk-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.ic-sr-block {
+  background: rgba(27, 47, 66, 0.5);
+  border: 1px solid #1b2f42;
+  border-radius: 10px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ic-sr-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #95a3b5;
+}
+
+.ic-sr-label strong {
+  font-weight: 700;
+}
+
+.ic-sr-reason {
+  font-size: 11.5px;
+  color: #6b7f94;
+  line-height: 1.5;
+}
+
+/* ─── Beginner Box ───────────────────────────────────────────────── */
+
+.ic-beginner-box {
+  background: rgba(240, 180, 41, 0.06);
+  border: 1px solid rgba(240, 180, 41, 0.2);
+  border-radius: 10px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ic-beginner-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: #f0b429;
+}
+
+/* ─── Key Insight ────────────────────────────────────────────────── */
+
+.ic-key-insight {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px 12px;
+  background: rgba(34, 230, 168, 0.06);
+  border: 1px solid rgba(34, 230, 168, 0.18);
+  border-radius: 10px;
+}
+
+.ic-key-insight svg {
+  color: #22e6a8;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.ic-key-insight p {
+  font-size: 12.5px;
+  color: #b0bec8;
+  line-height: 1.55;
+}
+
+/* ─── Inline Term Tooltip ────────────────────────────────────────── */
+
+.it-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.it-word {
+  color: #22e6a8;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.it-word:hover,
+.it-word.it-open {
+  opacity: 0.75;
+}
+
+.it-box {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 200;
+  width: 260px;
+  padding: 12px 14px;
+  background: #0d1e2e;
+  border: 1px solid #2d4a60;
+  border-radius: 10px;
+  font-size: 12.5px;
+  color: #b0bec8;
+  line-height: 1.6;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.55);
+  pointer-events: none;
+}
+
+.it-box strong {
+  color: #22e6a8;
+  display: block;
+  margin-bottom: 4px;
+  font-size: 13px;
+}
+
+/* Tap hint below summary */
+.ic-tap-hint {
+  font-size: 11px;
+  color: #3d5266;
+  margin-top: -6px;
+}
+
+/* Subtitle example term */
+.subtitle-term-example {
+  color: #22e6a8;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 3px;
+}
+
+/* ─── Expandable "What this means" ──────────────────────────────── */
+
+.ic-expand {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-top: 1px solid #1b2f42;
+  padding-top: 12px;
+}
+
+.expand-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  color: #95a3b5;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.18s ease;
+  text-align: left;
+}
+
+.expand-btn:hover {
+  color: #22e6a8;
+}
+
+.expand-body {
+  font-size: 13px;
+  color: #95a3b5;
+  line-height: 1.65;
+  padding: 12px 14px;
+  background: rgba(27, 47, 66, 0.4);
+  border-radius: 10px;
+  border: 1px solid #1b2f42;
+}
+
+/* ─── Card Footer ────────────────────────────────────────────────── */
+
+.ic-footer {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-top: 4px;
+}
+
+.ic-fp {
+  font-size: 12px;
+  color: #95a3b5;
+}
+
+.ic-fp strong {
+  font-weight: 700;
+}
+
+.ic-updated {
+  font-size: 11px;
+  color: #3d5266;
+  margin-left: auto;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────── */
+
+@media (max-width: 1024px) {
+  .insights-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .ai-title-row h1 {
+    font-size: 20px;
+  }
+
+  .insight-card {
+    padding: 16px 16px 14px 20px;
+  }
+
+  .tp-box {
+    width: 220px;
+  }
+
+  .ic-updated {
+    margin-left: 0;
+    width: 100%;
+  }
+}
