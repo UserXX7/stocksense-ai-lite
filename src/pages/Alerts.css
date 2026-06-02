@@ -1,0 +1,633 @@
+/* ─── Alerts Page ────────────────────────────────────────────────── */
+
+.alerts-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ─── iPhone-Style Big Drop Warning Pills ────────────────────────── */
+
+.warnings-container {
+  position: fixed;
+  top: 86px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: max-content;
+  max-width: min(520px, 90vw);
+  pointer-events: none;
+}
+
+.big-drop-pill {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  background: rgba(18, 6, 8, 0.96);
+  border: 1px solid rgba(255, 77, 94, 0.55);
+  border-radius: 16px;
+  box-shadow: 0 8px 40px rgba(255, 77, 94, 0.25), 0 2px 12px rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(20px);
+  pointer-events: all;
+  animation: pill-drop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes pill-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.pill-icon {
+  color: #ff4d5e;
+  flex-shrink: 0;
+  animation: pulse-icon 1.8s ease-in-out infinite;
+}
+
+@keyframes pulse-icon {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.pill-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.pill-title {
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #ff4d5e;
+}
+
+.pill-sub {
+  font-size: 13px;
+  color: rgba(245, 247, 250, 0.85);
+}
+
+.pill-sub strong {
+  color: #fff;
+}
+
+.pill-dismiss {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255, 77, 94, 0.15);
+  border: 1px solid rgba(255, 77, 94, 0.3);
+  color: #ff4d5e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.2s ease;
+}
+
+.pill-dismiss:hover {
+  background: rgba(255, 77, 94, 0.28);
+}
+
+/* ─── Header ─────────────────────────────────────────────────────── */
+
+.alerts-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.alerts-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.alerts-title-row h1 {
+  font-size: 26px;
+  font-weight: 800;
+  color: #f5f7fa;
+}
+
+.alerts-title-row svg {
+  color: #22e6a8;
+}
+
+.alerts-count-badge {
+  background: rgba(27, 47, 66, 0.8);
+  color: #95a3b5;
+  border: 1px solid #1b2f42;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 11px;
+  border-radius: 20px;
+}
+
+/* ─── How It Works Guide ─────────────────────────────────────────── */
+
+.hiw-guide {
+  background: rgba(27, 47, 66, 0.45);
+  border: 1px solid #1b2f42;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.hiw-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 13px 18px;
+  background: transparent;
+  border: none;
+  color: #95a3b5;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  transition: color 0.18s ease;
+}
+
+.hiw-toggle svg:first-child {
+  color: #22e6a8;
+}
+
+.hiw-toggle svg:last-child {
+  margin-left: auto;
+}
+
+.hiw-toggle:hover {
+  color: #f5f7fa;
+}
+
+.hiw-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0 18px 16px 18px;
+  border-top: 1px solid #1b2f42;
+  display: flex;
+  flex-direction: column;
+}
+
+.hiw-steps li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 13px;
+  color: #95a3b5;
+  line-height: 1.6;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(27, 47, 66, 0.6);
+}
+
+.hiw-steps li:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.hiw-num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(34, 230, 168, 0.12);
+  border: 1px solid rgba(34, 230, 168, 0.3);
+  color: #22e6a8;
+  font-size: 11px;
+  font-weight: 800;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ─── Two-Column Layout ──────────────────────────────────────────── */
+
+.alerts-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+/* ─── Form Card ──────────────────────────────────────────────────── */
+
+.alerts-form-card {
+  background: #0b1623;
+  border: 1px solid #1b2f42;
+  border-radius: 16px;
+  padding: 24px;
+  position: sticky;
+  top: 88px;
+}
+
+.alerts-form-card h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #f5f7fa;
+  margin-bottom: 8px;
+}
+
+.form-hint {
+  font-size: 12px;
+  color: #95a3b5;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.form-group label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #95a3b5;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+}
+
+.form-group input {
+  width: 100%;
+  background: #081421;
+  border: 1px solid #1b2f42;
+  color: #f5f7fa;
+  border-radius: 10px;
+  padding: 11px 14px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.form-group input:focus {
+  border-color: rgba(34, 230, 168, 0.45);
+}
+
+.form-group input::placeholder {
+  color: #3d5266;
+}
+
+.threshold-hint {
+  font-size: 11.5px;
+  color: #4a5e72;
+  line-height: 1.5;
+  margin-top: 6px;
+}
+
+.threshold-hint strong {
+  color: #95a3b5;
+}
+
+/* ─── Color Legend ───────────────────────────────────────────────── */
+
+.color-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px 0;
+  border-top: 1px solid #1b2f42;
+  margin-top: 4px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #95a3b5;
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.legend-dot.green { background: #22e6a8; }
+.legend-dot.red   { background: #ff4d5e; }
+
+.alert-form-error {
+  font-size: 12px;
+  color: #ff7b88;
+  background: rgba(255, 77, 94, 0.1);
+  border: 1px solid rgba(255, 77, 94, 0.22);
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin-bottom: 12px;
+}
+
+.add-stock-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 13px;
+  background: linear-gradient(135deg, #27e8a7, #19c989);
+  color: #03120d;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.15s ease;
+}
+
+.add-stock-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+/* ─── Form Stats ─────────────────────────────────────────────────── */
+
+.form-stats {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid #1b2f42;
+}
+
+.form-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  flex: 1;
+}
+
+.stat-value {
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.stat-value.gaining {
+  color: #22e6a8;
+}
+
+.stat-value.declining {
+  color: #ff4d5e;
+}
+
+.stat-label {
+  font-size: 11px;
+  color: #95a3b5;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.form-stat-divider {
+  width: 1px;
+  height: 34px;
+  background: #1b2f42;
+}
+
+/* ─── Watchlist / Alerts List ────────────────────────────────────── */
+
+.alerts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.alerts-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 64px 20px;
+  color: #95a3b5;
+  border: 1px dashed #1b2f42;
+  border-radius: 16px;
+  text-align: center;
+  font-size: 14px;
+}
+
+/* ─── Alert Card ─────────────────────────────────────────────────── */
+
+.alert-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 16px 16px 22px;
+  border-radius: 14px;
+  border: 1px solid transparent;
+  overflow: hidden;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.alert-card:hover {
+  transform: translateY(-2px);
+}
+
+/* Green — stock is up */
+.alert-card.up {
+  background: rgba(34, 230, 168, 0.065);
+  border-color: rgba(34, 230, 168, 0.16);
+  box-shadow: 0 4px 20px rgba(34, 230, 168, 0.04);
+}
+
+.alert-card.up:hover {
+  box-shadow: 0 10px 36px rgba(34, 230, 168, 0.1);
+}
+
+/* Red — stock is down */
+.alert-card.down {
+  background: rgba(255, 77, 94, 0.065);
+  border-color: rgba(255, 77, 94, 0.16);
+  box-shadow: 0 4px 20px rgba(255, 77, 94, 0.04);
+}
+
+.alert-card.down:hover {
+  box-shadow: 0 10px 36px rgba(255, 77, 94, 0.1);
+}
+
+/* Extra emphasis for big drops */
+.alert-card.big-drop {
+  background: rgba(255, 77, 94, 0.1);
+  border-color: rgba(255, 77, 94, 0.3);
+  box-shadow: 0 4px 24px rgba(255, 77, 94, 0.1);
+}
+
+/* ─── Left Accent Bar ────────────────────────────────────────────── */
+
+.alert-accent-bar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  border-radius: 14px 0 0 14px;
+}
+
+.alert-card.up .alert-accent-bar {
+  background: linear-gradient(to bottom, #22e6a8, #0bbf8a);
+}
+
+.alert-card.down .alert-accent-bar {
+  background: linear-gradient(to bottom, #ff4d5e, #cc2a38);
+}
+
+/* ─── Symbol Block ───────────────────────────────────────────────── */
+
+.alert-symbol-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  min-width: 52px;
+}
+
+.alert-symbol {
+  font-size: 15px;
+  font-weight: 800;
+  color: #f5f7fa;
+  letter-spacing: 0.4px;
+}
+
+.trend-icon {
+  flex-shrink: 0;
+}
+
+.up-icon {
+  color: #22e6a8;
+}
+
+.down-icon {
+  color: #ff4d5e;
+}
+
+/* ─── Card Body ──────────────────────────────────────────────────── */
+
+.alert-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.alert-change {
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.change-up {
+  color: #22e6a8;
+}
+
+.change-down {
+  color: #ff4d5e;
+}
+
+.alert-plain-english {
+  font-size: 12px;
+  color: #95a3b5;
+  font-style: italic;
+}
+
+.alert-price {
+  font-size: 13px;
+  color: #4a5e72;
+}
+
+.alert-timestamp {
+  font-size: 11px;
+  color: #3d5266;
+}
+
+/* ─── Big Drop Tag ───────────────────────────────────────────────── */
+
+.big-drop-tag {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(255, 77, 94, 0.15);
+  color: #ff4d5e;
+  border: 1px solid rgba(255, 77, 94, 0.28);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ─── Remove Button ──────────────────────────────────────────────── */
+
+.remove-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid #1b2f42;
+  background: rgba(11, 22, 35, 0.6);
+  color: #95a3b5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+}
+
+.remove-btn:hover {
+  background: rgba(255, 77, 94, 0.14);
+  color: #ff4d5e;
+  border-color: rgba(255, 77, 94, 0.35);
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────── */
+
+@media (max-width: 900px) {
+  .alerts-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .alerts-form-card {
+    position: static;
+  }
+
+  .warnings-container {
+    top: 80px;
+  }
+}
+
+@media (max-width: 600px) {
+  .alerts-title-row h1 {
+    font-size: 20px;
+  }
+
+  .alert-card {
+    gap: 12px;
+    padding: 14px 12px 14px 18px;
+  }
+
+  .alert-change {
+    font-size: 17px;
+  }
+
+  .big-drop-tag {
+    display: none;
+  }
+}
