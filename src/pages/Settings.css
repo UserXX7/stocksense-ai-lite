@@ -1,0 +1,287 @@
+/* ─── Settings Page ──────────────────────────────────────────────── */
+
+.settings-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 720px;
+}
+
+.settings-header h1 {
+  font-size: 26px;
+  font-weight: 800;
+  color: #f5f7fa;
+  margin-bottom: 4px;
+}
+
+.settings-header p {
+  font-size: 14px;
+  color: #95a3b5;
+}
+
+/* ─── Cards ──────────────────────────────────────────────────────── */
+
+.settings-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.settings-card {
+  background: #0b1623;
+  border: 1px solid #1b2f42;
+  border-radius: 16px;
+  padding: 6px 8px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.9px;
+  color: #95a3b5;
+  padding: 14px 14px 8px 14px;
+  border-bottom: 1px solid #1b2f42;
+  margin-bottom: 4px;
+}
+
+/* ─── Settings Row ───────────────────────────────────────────────── */
+
+.settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 13px 14px;
+  border-radius: 10px;
+  background: transparent;
+  border: none;
+  width: 100%;
+  text-align: left;
+  cursor: default;
+  transition: background 0.18s ease;
+}
+
+.action-row {
+  cursor: pointer;
+}
+
+.action-row:hover {
+  background: rgba(27, 47, 66, 0.6);
+}
+
+.action-row:hover .settings-chevron {
+  color: #22e6a8;
+}
+
+.settings-row-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex: 1;
+  min-width: 0;
+}
+
+.settings-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(27, 47, 66, 0.8);
+  border: 1px solid #1b2f42;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #22e6a8;
+  flex-shrink: 0;
+}
+
+.settings-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #f5f7fa;
+  margin-bottom: 2px;
+}
+
+.settings-desc {
+  font-size: 12px;
+  color: #95a3b5;
+}
+
+.settings-chevron {
+  color: #3d5266;
+  flex-shrink: 0;
+  transition: color 0.2s ease;
+}
+
+/* ─── Badge (e.g. "Off" for 2FA) ────────────────────────────────── */
+
+.settings-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: rgba(255, 77, 94, 0.1);
+  border: 1px solid rgba(255, 77, 94, 0.25);
+  color: #ff4d5e;
+  flex-shrink: 0;
+}
+
+/* ─── Toggle Switch ──────────────────────────────────────────────── */
+
+.toggle-switch {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  border-radius: 12px;
+  background: #1b2f42;
+  border: 1px solid #2d4a60;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+.toggle-switch::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #3d5266;
+  transition: transform 0.25s ease, background 0.25s ease;
+}
+
+.toggle-switch.toggle-on {
+  background: rgba(34, 230, 168, 0.2);
+  border-color: #22e6a8;
+}
+
+.toggle-switch.toggle-on::after {
+  transform: translateX(20px);
+  background: #22e6a8;
+}
+
+/* ─── Timezone Select ────────────────────────────────────────────── */
+
+.timezone-select {
+  background: #081421;
+  border: 1px solid #1b2f42;
+  color: #f5f7fa;
+  border-radius: 8px;
+  padding: 7px 10px;
+  font-size: 12px;
+  cursor: pointer;
+  outline: none;
+  flex-shrink: 0;
+  max-width: 190px;
+  transition: border-color 0.2s ease;
+}
+
+.timezone-select:focus {
+  border-color: rgba(34, 230, 168, 0.45);
+}
+
+.timezone-select option {
+  background: #0b1623;
+  color: #f5f7fa;
+}
+
+/* ─── Plan Display ───────────────────────────────────────────────── */
+
+.plan-display-row {
+  border-bottom: 1px solid #1b2f42;
+  border-radius: 0;
+}
+
+.plan-badge-green {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 20px;
+  background: rgba(34, 230, 168, 0.12);
+  border: 1px solid rgba(34, 230, 168, 0.3);
+  color: #22e6a8;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ─── Danger Zone ────────────────────────────────────────────────── */
+
+.danger-card {
+  border-color: rgba(255, 77, 94, 0.2);
+  background: rgba(255, 77, 94, 0.02);
+}
+
+.danger-label {
+  color: #ff4d5e;
+  border-bottom-color: rgba(255, 77, 94, 0.2);
+}
+
+.danger-desc {
+  font-size: 13px;
+  color: #95a3b5;
+  padding: 0 14px 8px 14px;
+  line-height: 1.5;
+}
+
+.danger-buttons {
+  display: flex;
+  gap: 10px;
+  padding: 4px 14px 14px 14px;
+  flex-wrap: wrap;
+}
+
+.danger-outline-btn,
+.danger-solid-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 11px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.danger-outline-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 77, 94, 0.35);
+  color: #ff4d5e;
+}
+
+.danger-outline-btn:hover {
+  background: rgba(255, 77, 94, 0.08);
+}
+
+.danger-solid-btn {
+  background: rgba(255, 77, 94, 0.15);
+  border: 1px solid rgba(255, 77, 94, 0.4);
+  color: #ff4d5e;
+}
+
+.danger-solid-btn:hover {
+  background: rgba(255, 77, 94, 0.25);
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────── */
+
+@media (max-width: 600px) {
+  .settings-card {
+    padding: 4px;
+  }
+
+  .timezone-select {
+    max-width: 130px;
+  }
+
+  .danger-buttons {
+    flex-direction: column;
+  }
+}
