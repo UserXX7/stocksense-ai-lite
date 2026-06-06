@@ -4,9 +4,9 @@ import "./Profile.css";
 
 // Hardcoded placeholder — replace with real user data from backend when ready
 const PLACEHOLDER_USER = {
-  name:        "John Doe",
-  username:    "@johndoe",
-  email:       "john@example.com",
+  name:        "Alif Rony",
+  username:    "@alifrony",
+  email:       "alif@gmail.com",
   memberSince: "January 2025",
   plan:        "Pro", // "Free" | "Basic" | "Pro"
 };
