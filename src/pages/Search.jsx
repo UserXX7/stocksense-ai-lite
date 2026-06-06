@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { searchStocks, getStockQuote } from "../services/stockApi";
 
 function Search() {
@@ -8,10 +9,12 @@ function Search() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  async function handleSearch(e) {
-    e.preventDefault();
+  const [searchParams] = useSearchParams();
 
-    if (query.trim() === "") {
+  async function runSearch(searchValue) {
+    const cleanQuery = searchValue.trim();
+
+    if (cleanQuery === "") {
       setError("Please enter a stock symbol or company name.");
       return;
     }
@@ -22,7 +25,7 @@ function Search() {
       setStocks([]);
       setQuotes({});
 
-      const data = await searchStocks(query);
+      const data = await searchStocks(cleanQuery);
 
       const filteredResults = data.result
         .filter((item) => item.type === "Common Stock")
@@ -49,6 +52,20 @@ function Search() {
     }
   }
 
+  function handleSearch(e) {
+    e.preventDefault();
+    runSearch(query);
+  }
+
+  useEffect(() => {
+    const queryFromNavbar = searchParams.get("q");
+
+    if (queryFromNavbar) {
+      setQuery(queryFromNavbar);
+      runSearch(queryFromNavbar);
+    }
+  }, [searchParams]);
+
   return (
     <section className="page">
       <div className="page-header">
@@ -66,7 +83,7 @@ function Search() {
           onChange={(e) => setQuery(e.target.value)}
         />
 
-        <button type="submit">
+        <button type="submit" disabled={loading}>
           {loading ? "Searching..." : "Search"}
         </button>
       </form>
@@ -78,7 +95,7 @@ function Search() {
 
         {loading && <p className="muted-text">Loading stock results...</p>}
 
-        {!loading && stocks.length === 0 && (
+        {!loading && stocks.length === 0 && !error && (
           <p className="muted-text">
             No results yet. Search for a stock symbol or company name.
           </p>
@@ -99,14 +116,18 @@ function Search() {
                 <div className="stock-price-box">
                   {quote ? (
                     <>
-                      <strong>${quote.c?.toFixed(2)}</strong>
+                      <strong>
+                        {quote.c ? `$${quote.c.toFixed(2)}` : "$0.00"}
+                      </strong>
+
                       <small
                         className={
                           quote.d >= 0 ? "positive-text" : "negative-text"
                         }
                       >
                         {quote.d >= 0 ? "+" : ""}
-                        {quote.d?.toFixed(2)} ({quote.dp?.toFixed(2)}%)
+                        {quote.d?.toFixed(2) || "0.00"} (
+                        {quote.dp?.toFixed(2) || "0.00"}%)
                       </small>
                     </>
                   ) : (
