@@ -1,12 +1,34 @@
+import { useState } from "react";
 import { Bell, Search, ChevronDown } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
+  const [globalSearch, setGlobalSearch] = useState("");
+  const navigate = useNavigate();
+
+  function handleGlobalSearch(e) {
+    e.preventDefault();
+
+    const cleanQuery = globalSearch.trim();
+
+    if (cleanQuery === "") {
+      return;
+    }
+
+    navigate(`/search?q=${encodeURIComponent(cleanQuery)}`);
+    setGlobalSearch("");
+  }
+
   return (
     <header className="navbar">
-      <div className="top-search">
+      <form className="top-search" onSubmit={handleGlobalSearch}>
         <Search size={18} />
-        <input placeholder="Search for stocks, ETFs, topics..." />
-      </div>
+        <input
+          placeholder="Search for stocks, ETFs, topics..."
+          value={globalSearch}
+          onChange={(e) => setGlobalSearch(e.target.value)}
+        />
+      </form>
 
       <div className="navbar-right">
         <div className="notification">
